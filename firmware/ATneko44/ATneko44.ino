@@ -44,21 +44,22 @@
 #define AWW 5
 #define WINK 6
 
+// Accelerometer data collect function
+void accel_read(int *x, int *y, int *z);
+
 // Servo control function declaration
 void pos(int servo1, int pos1, int servo2, int pos2, int servo3, int pos3, int servo4, int pos4);
 
 // global vars
 int i;
 int x, y, z;
-int buffer_x, buffer_y, buffer_z;
-int max_x, min_x, max_y, min_y, max_z, min_z;
-int tmp;
 int neutral_x, neutral_y, neutral_z;
 int animation;
 int debug;
 int boot;
 
 void setup() {
+  analogReference(EXTERNAL);
   
   pinMode(PIN_SX1, OUTPUT);
   pinMode(PIN_SX2, OUTPUT);
@@ -85,8 +86,6 @@ void setup() {
     // STANDARD MODE
     attachInterrupt(0, calibration, FALLING);
   }
-  
-    analogReference(EXTERNAL);
 } 
 
 void loop() {
@@ -106,39 +105,9 @@ void loop() {
   }
   else {
     // STANDARD MODE
-  
-    //Initialization buffers
-    buffer_x=0;
-    buffer_y=0;
-    buffer_z=0;
-    min_x=1023;
-    max_x=0;
-    min_y=1023;
-    max_y=0;
-    min_z=1023;
-    max_z=0;
     
     // Accelerometer Read
-    for(i=0; i<10; i++) {
-      tmp=analogRead(PIN_ACCEL_X);
-      if(tmp<min_x) min_x=tmp;
-      if(tmp>max_x) max_x=tmp;
-      buffer_x+=tmp;
-      tmp=analogRead(PIN_ACCEL_Y);
-      if(tmp<min_y) min_y=tmp;
-      if(tmp>max_y) max_y=tmp;
-      buffer_y+=tmp;
-      tmp=analogRead(PIN_ACCEL_Z);
-      if(tmp<min_z) min_z=tmp;
-      if(tmp>max_z) max_z=tmp;
-      buffer_z+=tmp;
-      delay(20);
-    }
-    
-    // Accelerometer data normalization
-    x=(buffer_x-min_x-max_x)/8;
-    y=(buffer_y-min_y-max_y)/8;
-    z=(buffer_z-min_z-max_z)/8;
+    accel_read(&x, &y, &z);
     
     digitalWrite(PIN_DEBUG1, LOW);
     digitalWrite(PIN_DEBUG2, LOW);
@@ -199,6 +168,44 @@ void loop() {
   delay(500);
 }
 
+
+void accel_read(int *x, int *y, int *z) {
+  int i;
+  int buffer_x=0;
+  int buffer_y=0;
+  int buffer_z=0;
+  int min_x=1023;
+  int max_x=0;
+  int min_y=1023;
+  int max_y=0;
+  int min_z=1023;
+  int max_z=0;
+  int tmp;
+  
+  // Accelerometer Read
+  for(i=0; i<10; i++) {
+    tmp=analogRead(PIN_ACCEL_X);
+    if(tmp<min_x) min_x=tmp;
+    if(tmp>max_x) max_x=tmp;
+    buffer_x+=tmp;
+    tmp=analogRead(PIN_ACCEL_Y);
+    if(tmp<min_y) min_y=tmp;
+    if(tmp>max_y) max_y=tmp;
+    buffer_y+=tmp;
+    tmp=analogRead(PIN_ACCEL_Z);
+    if(tmp<min_z) min_z=tmp;
+    if(tmp>max_z) max_z=tmp;
+    buffer_z+=tmp;
+    delay(20);
+  }
+    
+    // Accelerometer data normalization
+    *x=(buffer_x-min_x-max_x)/8;
+    *y=(buffer_y-min_y-max_y)/8;
+    *z=(buffer_z-min_z-max_z)/8;
+
+}
+
 void pos(int servo1, int pos1, int servo2=-1, int pos2=0, int servo3=-1, int pos3=0, int servo4=-1, int pos4=0) {
   int i;
   
@@ -231,49 +238,5 @@ void pos(int servo1, int pos1, int servo2=-1, int pos2=0, int servo3=-1, int pos
 }
 
 void calibration() {
-  
-    digitalWrite(PIN_DEBUG1, HIGH);
-    delay(200);
-    digitalWrite(PIN_DEBUG1, LOW);
-    
-    digitalWrite(PIN_DEBUG1, HIGH);
-    delay(200);
-    digitalWrite(PIN_DEBUG1, LOW);
-    
-    digitalWrite(PIN_DEBUG1, HIGH);
-    delay(200);
-    digitalWrite(PIN_DEBUG1, LOW);
-  
-    //Initialization buffers
-    buffer_x=0;
-    buffer_y=0;
-    buffer_z=0;
-    min_x=1023;
-    max_x=0;
-    min_y=1023;
-    max_y=0;
-    min_z=1023;
-    max_z=0;
-    
-    // Accelerometer Read
-    for(i=0; i<10; i++) {
-      tmp=analogRead(PIN_ACCEL_X);
-      if(tmp<min_x) min_x=tmp;
-      if(tmp>max_x) max_x=tmp;
-      buffer_x+=tmp;
-      tmp=analogRead(PIN_ACCEL_Y);
-      if(tmp<min_y) min_y=tmp;
-      if(tmp>max_y) max_y=tmp;
-      buffer_y+=tmp;
-      tmp=analogRead(PIN_ACCEL_Z);
-      if(tmp<min_z) min_z=tmp;
-      if(tmp>max_z) max_z=tmp;
-      buffer_z+=tmp;
-      delay(20);
-    }
-    
-    // Accelerometer data normalization
-    neutral_x=(buffer_x-min_x-max_x)/8;
-    neutral_y=(buffer_y-min_y-max_y)/8;
-    neutral_z=(buffer_z-min_z-max_z)/8;
+    accel_read(&neutral_x, &neutral_y, &neutral_z);
 }
