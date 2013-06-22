@@ -75,6 +75,10 @@ void setup() {
   i=0;
   boot=1;
   debug=0;
+  
+  neutral_x=511;
+  neutral_y=511;
+  neutral_z=511;
 
   delay(500);
 
@@ -109,17 +113,19 @@ void loop() {
     // Accelerometer Read
     accel_read(&x, &y, &z);
     
+    digitalWrite(PIN_DEBUG1, HIGH);
+    delay(100);
     digitalWrite(PIN_DEBUG1, LOW);
-    digitalWrite(PIN_DEBUG2, LOW);
     
     delay(500);
     
     // Position detection
     if(boot==1) animation=BOOT;
-    else if(y < neutral_y+SAD_MAX_Y) animation=NORMAL;
+    else if(y < neutral_y+SAD_MAX_Y) animation=SAD;
     else if(x > neutral_x+ALERT_MIN_X && x < neutral_x+ALERT_MAX_X && y > neutral_y+ALERT_MIN_Y) animation=ALERT;
-    else if(x > neutral_x+AWW_MIN_X && y > neutral_y+AWW_MIN_Y) animation=ALERT;
-    else if(x > neutral_x+WINK_MAX_X && y > neutral_y+WINK_MIN_Y) animation=WINK;
+    else if(x > neutral_x+AWW_MIN_X && y > neutral_y+AWW_MIN_Y) animation=AWW;
+    else if(x < neutral_x+WINK_MAX_X && y > neutral_y+WINK_MIN_Y) animation=WINK;
+    else animation=NORMAL;
   }
   
   // Run animation
@@ -128,46 +134,85 @@ void loop() {
   }
   else if(animation==BOOT) {
     boot=0;
-    digitalWrite(PIN_DEBUG1, HIGH);
-    digitalWrite(PIN_DEBUG2, HIGH);
     pos(PIN_SX1, 180, PIN_SX2, 180, PIN_DX1, 180, PIN_DX2, 180);
   }
   else if(animation==NORMAL) {
-    digitalWrite(PIN_DEBUG1, HIGH);
-    digitalWrite(PIN_DEBUG2, HIGH);
-    pos(PIN_SX1, 0, PIN_SX2, 0, PIN_DX1, 0, PIN_DX2, 0);
-  }
-  else if(animation==SAD) {
-    digitalWrite(PIN_DEBUG1, HIGH);
-    delay(200);
-    digitalWrite(PIN_DEBUG1, LOW);
     digitalWrite(PIN_DEBUG2, HIGH);
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
+    delay(200);
+    pos(PIN_SX1, 0, PIN_SX2, 0, PIN_DX1, 0, PIN_DX2, 0);
+  }
+  else if(animation==SAD) {
+    digitalWrite(PIN_DEBUG2, HIGH);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, LOW);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, HIGH);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, LOW);
+    delay(200);
     pos(PIN_SX1, 180, PIN_SX2, 180, PIN_DX1, 180, PIN_DX2, 180);
   }
   else if(animation==ALERT) {
-    digitalWrite(PIN_DEBUG1, LOW);
     digitalWrite(PIN_DEBUG2, HIGH);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, LOW);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, HIGH);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, LOW);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, HIGH);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, LOW);
+    delay(200);
     pos(PIN_SX1, 0, PIN_SX2, 0, PIN_DX1, 0, PIN_DX2, 0);
   }
   else if(animation==AWW) {
     digitalWrite(PIN_DEBUG2, HIGH);
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
-    digitalWrite(PIN_DEBUG1, HIGH);
     delay(200);
-    digitalWrite(PIN_DEBUG1, LOW);
+        digitalWrite(PIN_DEBUG2, HIGH);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, LOW);
+    delay(200);
+        digitalWrite(PIN_DEBUG2, HIGH);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, LOW);
+    delay(200);
+        digitalWrite(PIN_DEBUG2, HIGH);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, LOW);
+    delay(200);
     pos(PIN_SX1, 180, PIN_SX2, 180, PIN_DX1, 180, PIN_DX2, 180);
   }
   else if(animation==WINK) {
-    digitalWrite(PIN_DEBUG1, HIGH);
+    digitalWrite(PIN_DEBUG2, HIGH);
+    delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
+    delay(200);
+        digitalWrite(PIN_DEBUG2, HIGH);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, LOW);
+    delay(200);
+        digitalWrite(PIN_DEBUG2, HIGH);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, LOW);
+    delay(200);
+        digitalWrite(PIN_DEBUG2, HIGH);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, LOW);
+    delay(200);
+        digitalWrite(PIN_DEBUG2, HIGH);
+    delay(200);
+    digitalWrite(PIN_DEBUG2, LOW);
+    delay(100);
     pos(PIN_SX1, 0, PIN_SX2, 0, PIN_DX1, 0, PIN_DX2, 0);
   }
   delay(500);
 }
-
 
 void accel_read(int *x, int *y, int *z) {
   int i;
@@ -181,7 +226,7 @@ void accel_read(int *x, int *y, int *z) {
   int min_z=1023;
   int max_z=0;
   int tmp;
-  
+
   // Accelerometer Read
   for(i=0; i<10; i++) {
     tmp=analogRead(PIN_ACCEL_X);
