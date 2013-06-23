@@ -1,8 +1,8 @@
 /***************************************
         *** ATneko Firmware ***
             
-  Software Version:     0.0.0
-  Supported Hardware:   ATneko44
+  Software Version:    0.0.0
+  Supported Hardware:  ATneko44 @ 8MHZ
 
 ***************************************/
 
@@ -130,21 +130,24 @@ void loop() {
   
   // Run animation
   if(animation==DEBUG) {
-    pos(PIN_SX1, 50, PIN_DX1, 50);
-    pos(PIN_SX2, 50, PIN_DX2, 50);
+    digitalWrite(PIN_DEBUG2, HIGH);
+    pos(PIN_SX1, 170, PIN_DX1, 10);
+    pos(PIN_SX2, 20, PIN_DX2, 160);
+    delay(5000);
+    digitalWrite(PIN_DEBUG2, LOW);
   }
   else if(animation==BOOT) {
     boot=0;
-    pos(PIN_SX1, 50, PIN_DX1, 50);
-    pos(PIN_SX2, 50, PIN_DX2, 50);
+    pos(PIN_SX1, 170, PIN_DX1, 10);
+    pos(PIN_SX2, 10, PIN_DX2, 170);
   }
   else if(animation==NORMAL) {
     digitalWrite(PIN_DEBUG2, HIGH);
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(200);
-    pos(PIN_SX1, 120, PIN_DX1, 120);
-    pos(PIN_SX2, 120, PIN_DX2, 120);
+    pos(PIN_SX1, 160, PIN_DX1, 20);
+    pos(PIN_SX2, 30, PIN_DX2, 150);
   }
   else if(animation==SAD) {
     digitalWrite(PIN_DEBUG2, HIGH);
@@ -155,8 +158,8 @@ void loop() {
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(200);
-    pos(PIN_SX1, 50, PIN_DX1, 50);
-    pos(PIN_SX2, 50, PIN_DX2, 50);
+    pos(PIN_SX1, 60, PIN_DX1, 120);
+    pos(PIN_SX2, 110, PIN_DX2, 70);
   }
   else if(animation==ALERT) {
     digitalWrite(PIN_DEBUG2, HIGH);
@@ -171,8 +174,8 @@ void loop() {
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(200);
-    pos(PIN_SX1, 120, PIN_DX1, 120);
-    pos(PIN_SX2, 120, PIN_DX2, 120);
+    pos(PIN_SX1, 170, PIN_DX1, 10);
+    pos(PIN_SX2, 10, PIN_DX2, 170);
   }
   else if(animation==AWW) {
     digitalWrite(PIN_DEBUG2, HIGH);
@@ -191,8 +194,8 @@ void loop() {
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(200);
-    pos(PIN_SX1, 50, PIN_DX1, 50);
-    pos(PIN_SX2, 50, PIN_DX2, 50);
+    pos(PIN_SX1, 150, PIN_DX1, 30);
+    pos(PIN_SX2, 40, PIN_DX2, 140);
   }
   else if(animation==WINK) {
     digitalWrite(PIN_DEBUG2, HIGH);
@@ -214,9 +217,28 @@ void loop() {
         digitalWrite(PIN_DEBUG2, HIGH);
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
-    delay(100);
-    pos(PIN_SX1, 120, PIN_DX1, 120);
-    pos(PIN_SX2, 120, PIN_DX2, 120);
+
+    
+    
+     //   pos(PIN_SX1, 160, PIN_DX1, 20);
+   // pos(PIN_SX2, 30, PIN_DX2, 150);
+    
+    for(i=0; i<2; i++) {
+      pos(PIN_SX1, 160, PIN_DX1, 130);
+      pos(PIN_SX2, 30, PIN_DX2, 80);
+      delay(100);
+      pos(PIN_SX1, 160, PIN_DX1, 160);
+      pos(PIN_SX2, 30, PIN_DX2, 110);
+      delay(100);
+      pos(PIN_SX1, 160, PIN_DX1, 130);
+      pos(PIN_SX2, 30, PIN_DX2, 140);
+      delay(100);
+      pos(PIN_SX1, 160, PIN_DX1, 100);
+      pos(PIN_SX2, 30, PIN_DX2, 110);
+      delay(100);
+    }
+    pos(PIN_SX1, 160, PIN_DX1, 20);
+    pos(PIN_SX2, 30, PIN_DX2, 150);
   }
   delay(500);
 }
@@ -264,7 +286,7 @@ void pos(int servo1, int pos1, int servo2=-1, int pos2=0) {
   pos1=map(pos1, 0, 179, 500, 2500);
   pos2=map(pos2, 0, 179, 500, 2500);
 
-  for(i=0; i<15; i++) {
+  for(i=0; i<5; i++) {
     digitalWrite(servo1, HIGH);
     delayMicroseconds(pos1);
     digitalWrite(servo1, LOW);
