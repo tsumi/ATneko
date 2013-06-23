@@ -48,7 +48,7 @@
 void accel_read(int *x, int *y, int *z);
 
 // Servo control function declaration
-void pos(int servo1, int pos1, int servo2, int pos2, int servo3, int pos3, int servo4, int pos4);
+void pos(int servo1, int pos1, int servo2, int pos2);
 
 // global vars
 int i;
@@ -130,18 +130,21 @@ void loop() {
   
   // Run animation
   if(animation==DEBUG) {
-    pos(PIN_SX1, 50, PIN_SX2, 0, PIN_DX1, 50, PIN_DX2, 0);
+    pos(PIN_SX1, 50, PIN_DX1, 50);
+    pos(PIN_SX2, 50, PIN_DX2, 50);
   }
   else if(animation==BOOT) {
     boot=0;
-    pos(PIN_SX1, 120, PIN_SX2, 179, PIN_DX1, 120, PIN_DX2, 179);
+    pos(PIN_SX1, 50, PIN_DX1, 50);
+    pos(PIN_SX2, 50, PIN_DX2, 50);
   }
   else if(animation==NORMAL) {
     digitalWrite(PIN_DEBUG2, HIGH);
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(200);
-    pos(PIN_SX1, 50, PIN_SX2, 0, PIN_DX1, 50, PIN_DX2, 0);
+    pos(PIN_SX1, 120, PIN_DX1, 120);
+    pos(PIN_SX2, 120, PIN_DX2, 120);
   }
   else if(animation==SAD) {
     digitalWrite(PIN_DEBUG2, HIGH);
@@ -152,7 +155,8 @@ void loop() {
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(200);
-    pos(PIN_SX1, 120, PIN_SX2, 179, PIN_DX1, 120, PIN_DX2, 179);
+    pos(PIN_SX1, 50, PIN_DX1, 50);
+    pos(PIN_SX2, 50, PIN_DX2, 50);
   }
   else if(animation==ALERT) {
     digitalWrite(PIN_DEBUG2, HIGH);
@@ -167,7 +171,8 @@ void loop() {
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(200);
-    pos(PIN_SX1, 50, PIN_SX2, 0, PIN_DX1, 50, PIN_DX2, 0);
+    pos(PIN_SX1, 120, PIN_DX1, 120);
+    pos(PIN_SX2, 120, PIN_DX2, 120);
   }
   else if(animation==AWW) {
     digitalWrite(PIN_DEBUG2, HIGH);
@@ -186,7 +191,8 @@ void loop() {
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(200);
-    pos(PIN_SX1, 120, PIN_SX2, 179, PIN_DX1, 120, PIN_DX2, 179);
+    pos(PIN_SX1, 50, PIN_DX1, 50);
+    pos(PIN_SX2, 50, PIN_DX2, 50);
   }
   else if(animation==WINK) {
     digitalWrite(PIN_DEBUG2, HIGH);
@@ -209,7 +215,8 @@ void loop() {
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(100);
-    pos(PIN_SX1, 50, PIN_SX2, 0, PIN_DX1, 50, PIN_DX2, 0);
+    pos(PIN_SX1, 120, PIN_DX1, 120);
+    pos(PIN_SX2, 120, PIN_DX2, 120);
   }
   delay(500);
 }
@@ -251,15 +258,13 @@ void accel_read(int *x, int *y, int *z) {
 
 }
 
-void pos(int servo1, int pos1, int servo2=-1, int pos2=0, int servo3=-1, int pos3=0, int servo4=-1, int pos4=0) {
+void pos(int servo1, int pos1, int servo2=-1, int pos2=0) {
   int i;
   
   pos1=map(pos1, 0, 179, 500, 2500);
   pos2=map(pos2, 0, 179, 500, 2500);
-  pos3=map(pos3, 0, 179, 500, 2500);
-  pos4=map(pos4, 0, 179, 500, 2500);
 
-  for(i=0; i<25; i++) {
+  for(i=0; i<15; i++) {
     digitalWrite(servo1, HIGH);
     delayMicroseconds(pos1);
     digitalWrite(servo1, LOW);
@@ -267,16 +272,6 @@ void pos(int servo1, int pos1, int servo2=-1, int pos2=0, int servo3=-1, int pos
       digitalWrite(servo2, HIGH);
       delayMicroseconds(pos2);
       digitalWrite(servo2, LOW);
-    }
-    if(servo3 != -1) {
-      digitalWrite(servo3, HIGH);
-      delayMicroseconds(pos3);
-      digitalWrite(servo3, LOW);
-    }
-    if(servo4 != -1) {
-      digitalWrite(servo4, HIGH);
-      delayMicroseconds(pos4);
-      digitalWrite(servo4, LOW);
     }
     delay(20);
   }
