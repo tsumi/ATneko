@@ -130,18 +130,18 @@ void loop() {
   
   // Run animation
   if(animation==DEBUG) {
-    pos(PIN_SX1, 0, PIN_SX2, 0, PIN_DX1, 0, PIN_DX2, 0);
+    pos(PIN_SX1, 50, PIN_SX2, 0, PIN_DX1, 50, PIN_DX2, 0);
   }
   else if(animation==BOOT) {
     boot=0;
-    pos(PIN_SX1, 180, PIN_SX2, 180, PIN_DX1, 180, PIN_DX2, 180);
+    pos(PIN_SX1, 120, PIN_SX2, 179, PIN_DX1, 120, PIN_DX2, 179);
   }
   else if(animation==NORMAL) {
     digitalWrite(PIN_DEBUG2, HIGH);
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(200);
-    pos(PIN_SX1, 0, PIN_SX2, 0, PIN_DX1, 0, PIN_DX2, 0);
+    pos(PIN_SX1, 50, PIN_SX2, 0, PIN_DX1, 50, PIN_DX2, 0);
   }
   else if(animation==SAD) {
     digitalWrite(PIN_DEBUG2, HIGH);
@@ -152,7 +152,7 @@ void loop() {
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(200);
-    pos(PIN_SX1, 180, PIN_SX2, 180, PIN_DX1, 180, PIN_DX2, 180);
+    pos(PIN_SX1, 120, PIN_SX2, 179, PIN_DX1, 120, PIN_DX2, 179);
   }
   else if(animation==ALERT) {
     digitalWrite(PIN_DEBUG2, HIGH);
@@ -167,7 +167,7 @@ void loop() {
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(200);
-    pos(PIN_SX1, 0, PIN_SX2, 0, PIN_DX1, 0, PIN_DX2, 0);
+    pos(PIN_SX1, 50, PIN_SX2, 0, PIN_DX1, 50, PIN_DX2, 0);
   }
   else if(animation==AWW) {
     digitalWrite(PIN_DEBUG2, HIGH);
@@ -186,7 +186,7 @@ void loop() {
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(200);
-    pos(PIN_SX1, 180, PIN_SX2, 180, PIN_DX1, 180, PIN_DX2, 180);
+    pos(PIN_SX1, 120, PIN_SX2, 179, PIN_DX1, 120, PIN_DX2, 179);
   }
   else if(animation==WINK) {
     digitalWrite(PIN_DEBUG2, HIGH);
@@ -209,7 +209,7 @@ void loop() {
     delay(200);
     digitalWrite(PIN_DEBUG2, LOW);
     delay(100);
-    pos(PIN_SX1, 0, PIN_SX2, 0, PIN_DX1, 0, PIN_DX2, 0);
+    pos(PIN_SX1, 50, PIN_SX2, 0, PIN_DX1, 50, PIN_DX2, 0);
   }
   delay(500);
 }
