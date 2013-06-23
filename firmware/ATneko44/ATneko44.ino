@@ -135,8 +135,8 @@ void loop() {
   }
   else if(animation==BOOT) {
     boot=0;
-    pos(PIN_SX1, 170, PIN_DX1, 10);
-    pos(PIN_SX2, 10, PIN_DX2, 170);
+    pos(PIN_SX1, 160, PIN_DX1, 20);
+    pos(PIN_SX2, 30, PIN_DX2, 150);
     last_animation=animation;
   }
   else if(animation==NORMAL) {
@@ -148,7 +148,7 @@ void loop() {
   }
   else if(animation==SAD) {
     if(last_animation!=animation) {
-      pos(PIN_SX1, 60, PIN_DX1, 120);
+      pos(PIN_SX1, 10, PIN_DX1, 170);
       pos(PIN_SX2, 110, PIN_DX2, 70);
       last_animation=animation;
     }
@@ -233,7 +233,7 @@ void pos(int servo1, int pos1, int servo2=-1, int pos2=0) {
   pos1=map(pos1, 0, 179, 500, 2500);
   pos2=map(pos2, 0, 179, 500, 2500);
 
-  for(i=0; i<5; i++) {
+  for(i=0; i<10; i++) {
     digitalWrite(servo1, HIGH);
     delayMicroseconds(pos1);
     digitalWrite(servo1, LOW);
