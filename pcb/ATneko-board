@@ -6,7 +6,7 @@ FileVersion[20070407]
 PCB["ATneko44" 196850 118110]
 
 Grid[39.4 39 14 1]
-Cursor[57795 49975 0.000000]
+Cursor[155393 118124 0.000000]
 PolyArea[3100.006200]
 Thermal[0.500000]
 DRC[1000 1000 1000 1000 1500 1000]
@@ -821,6 +821,7 @@ Via[100394 115762 7874 1968 0 3150 "" ""]
 Via[131890 39384 7874 1968 0 3150 "" ""]
 Via[108268 42534 7874 1968 0 3150 "" ""]
 Via[131890 89384 7874 7874 0 3150 "" ""]
+Via[165354 50880 7874 1968 0 3150 "" ""]
 
 Element["" "R 0.25W" "" "0.25W Resistor (300 mil)" 120787 39384 2000 12000 3 100 ""]
 (
@@ -941,8 +942,6 @@ Layer(6 "bottom")
 	Line[46626 96459 46614 96471 2756 1968 "clearline"]
 	Line[46614 96471 149606 96471 2756 1968 "clearline"]
 	Line[149606 96471 149606 51195 2756 1968 "clearline"]
-	Line[165354 40880 159921 40880 2756 1968 "clearline"]
-	Line[159921 40880 149606 51195 2756 1968 "clearline"]
 	Line[165354 30880 160787 30880 2756 1968 "clearline"]
 	Line[81496 44057 81508 44069 2756 1968 "clearline"]
 	Line[108268 42534 108268 50290 2756 1968 "clearline"]
@@ -985,6 +984,8 @@ Layer(6 "bottom")
 	Line[81508 26589 156496 26589 2756 1968 "clearline"]
 	Line[81508 44069 81508 26616 2756 1968 "clearline"]
 	Line[81508 26616 81535 26589 2756 1968 "clearline"]
+	Line[165354 50880 149921 50880 2756 1968 "clearline"]
+	Line[149921 50880 149606 51195 2756 1968 "clearline"]
 )
 Layer(7 "outline")
 (
@@ -1014,13 +1015,13 @@ Layer(9 "silk")
 Layer(10 "silk")
 (
 	Text[160394 66038 0 100 "C1" "clearline"]
-	Text[170394 37731 0 100 "GND" "clearline"]
-	Text[170236 28006 0 100 "D1" "clearline"]
-	Text[170157 17849 0 100 "D2" "clearline"]
+	Text[170945 47888 0 100 "GND" "clearline"]
+	Text[170945 27849 0 100 "D1" "clearline"]
+	Text[170708 17731 0 100 "D2" "clearline"]
 	Text[139016 81313 0 100 "L1" "clearline"]
 	Text[131026 66550 1 100 "LD1117" "clearline"]
 	Text[48110 56195 0 100 "ATtiny44" "clearline"]
-	Text[61299 28479 0 100 "B1" "clearline"]
-	Text[118031 56707 0 100 "R1" "clearline"]
 	Text[140394 38872 0 100 "C2" "clearline"]
+	Text[61181 28322 0 100 "B1" "clearline"]
+	Text[118425 56746 0 100 "R1" "clearline"]
 )
