@@ -8,14 +8,15 @@
 
 // Pin Map
 #define PIN_SX1 PIN_A5
-#define PIN_SX2 PIN_A4
-#define PIN_DX1 PIN_A6
+#define PIN_SX2 PIN_A6
+#define PIN_DX1 PIN_A4
 #define PIN_DX2 PIN_A7
 #define PIN_ACCEL_X 1
 #define PIN_ACCEL_Y 2
 #define PIN_ACCEL_Z 3 // Unused
 #define PIN_CALIBRATION PIN_B2
-#define PIN_DEBUG PIN_B0
+#define PIN_DEBUG1 PIN_B0
+#define PIN_DEBUG2 PIN_B1
 
 // SAD Trigger
 #define SAD_MAX_Y -20
@@ -69,7 +70,8 @@ void setup() {
   pinMode(PIN_DX1, OUTPUT);
   pinMode(PIN_DX2, OUTPUT);
   
-  pinMode(PIN_DEBUG, OUTPUT); // DEBUG
+  pinMode(PIN_DEBUG1, OUTPUT); // DEBUG
+  pinMode(PIN_DEBUG2, OUTPUT); // DEBUG
   
   pinMode(PIN_CALIBRATION, INPUT);
   digitalWrite(PIN_CALIBRATION, HIGH);
@@ -278,9 +280,9 @@ void calibration() {
 void debug_led(int count, int sleep) {
   int i;
   for(i=0; i<count; i++) {
-    digitalWrite(PIN_DEBUG, HIGH);
+    digitalWrite(PIN_DEBUG1, HIGH);
     delay(sleep);
-    digitalWrite(PIN_DEBUG, LOW);
+    digitalWrite(PIN_DEBUG1, LOW);
     delay(sleep);
   }
 }
