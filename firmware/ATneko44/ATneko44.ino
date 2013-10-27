@@ -22,16 +22,16 @@
 #define SAD_MAX_Y -20
 
 // ALERT Trigger
-#define ALERT_MIN_X -20
-#define ALERT_MAX_X 20
-#define ALERT_MIN_Y 10
+#define ALERT_MIN_X -10
+#define ALERT_MAX_X 10
+#define ALERT_MIN_Y 20
 
 // AWW Trigger
-#define AWW_MIN_X 20
+#define AWW_MIN_X 10
 #define AWW_MIN_Y -20
 
 // WINK Trigger
-#define WINK_MAX_X -20
+#define WINK_MAX_X -10
 #define WINK_MIN_Y -20
 
 // Animations
@@ -112,8 +112,10 @@ void loop() {
     else {
       animation=i;
       i++;
-      if(i>WINK) i=NORMAL;    
+      if(i>AWW) i=NORMAL;    
     }
+    debug_led(animation, 200);
+    delay(5000);
   }
   else {
     // STANDARD MODE
@@ -126,13 +128,8 @@ void loop() {
     else if(y < neutral_y+SAD_MAX_Y) animation=SAD;
     else if(x > neutral_x+ALERT_MIN_X && x < neutral_x+ALERT_MAX_X && y > neutral_y+ALERT_MIN_Y) animation=ALERT;
     else if(x > neutral_x+AWW_MIN_X && y > neutral_y+AWW_MIN_Y) animation=AWW;
-    else if(x < neutral_x+WINK_MAX_X && y > neutral_y+WINK_MIN_Y) animation=WINK;
+    else if(x < neutral_x+WINK_MAX_X && y > neutral_y+WINK_MIN_Y) animation=AWW; //animation=WINK;
     else animation=NORMAL;
-  }
-  
-  if(debug==1) {
-    debug_led(animation, 200);
-    delay(5000);
   }
   
   // Run animation
@@ -153,23 +150,23 @@ void loop() {
   }
   else if(animation==SAD) {
     if(last_animation!=animation) {
-      pos(PIN_SX1, 10, PIN_DX1, 170, PIN_SX2, 110, PIN_DX2, 70);
+      pos(PIN_SX1, 90, PIN_DX1, 90, PIN_SX2, 90, PIN_DX2, 90);
       last_animation=animation;
     }
   }
   else if(animation==ALERT) {
     if(last_animation!=animation) {
-      pos(PIN_SX1, 170, PIN_DX1, 10, PIN_SX2, 10, PIN_DX2, 170);
+      pos(PIN_SX1, 170, PIN_DX1, 10, PIN_SX2, 15, PIN_DX2, 165);
       last_animation=animation;
     }
   }
   else if(animation==AWW) {
     if(last_animation!=animation) {
-      pos(PIN_SX1, 150, PIN_DX1, 30, PIN_SX2, 40, PIN_DX2, 140);
+      pos(PIN_SX1, 140, PIN_DX1, 40, PIN_SX2, 50, PIN_DX2, 130);
       last_animation=animation;
     }
   }
-  else if(animation==WINK) {
+  /*else if(animation==WINK) {
     if(last_animation!=animation) {
       for(i=0; i<2; i++) {
         pos(PIN_SX1, 160, PIN_DX1, 130, PIN_SX2, 30, PIN_DX2, 80);
@@ -184,7 +181,7 @@ void loop() {
       pos(PIN_SX1, 160, PIN_DX1, 20, PIN_SX2, 30, PIN_DX2, 150);
       last_animation=animation;
     }
-  }
+  }*/
   delay(200);
 }
 
@@ -202,7 +199,7 @@ void accel_read(int *x, int *y, int *z) {
   int tmp;
 
   // Accelerometer Read
-  for(i=0; i<10; i++) {
+  for(i=0; i<15; i++) {
     tmp=analogRead(PIN_ACCEL_X);
     if(tmp<min_x) min_x=tmp;
     if(tmp>max_x) max_x=tmp;
@@ -219,9 +216,9 @@ void accel_read(int *x, int *y, int *z) {
   }
     
   // Accelerometer data normalization
-  *x=(buffer_x-min_x-max_x)/8;
-  *y=(buffer_y-min_y-max_y)/8;
-  *z=(buffer_z-min_z-max_z)/8;
+  *x=(buffer_x-min_x-max_x)/13;
+  *y=(buffer_y-min_y-max_y)/13;
+  *z=(buffer_z-min_z-max_z)/13;
 }
 
 void pos(int sx1, int pos_sx1, int dx1, int pos_dx1, int sx2, int pos_sx2, int dx2, int pos_dx2) {
@@ -233,14 +230,14 @@ void pos(int sx1, int pos_sx1, int dx1, int pos_dx1, int sx2, int pos_sx2, int d
   k=pos_dx1-curpos_dx1;
   if(k<0) k=k*(-1);
   max1=max(i, k);
-  max1=(max1/15)+1;
+  max1=(max1/10)+3;
   
   i=pos_sx2-curpos_sx2;
   if(i<0) i=i*(-1);
   k=pos_dx2-curpos_dx2;
   if(k<0) k=k*(-1);
   max2=max(i, k);
-  max2=(max2/15)+1;
+  max2=(max2/10)+3;
   
   curpos_sx1=pos_sx1;
   curpos_dx1=pos_dx1;
