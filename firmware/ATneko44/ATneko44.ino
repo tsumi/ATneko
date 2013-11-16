@@ -1,7 +1,7 @@
 /***************************************
         *** ATneko Firmware ***
             
-  Software Version:    0.0.0
+  Software Version:    0.1.0
   Supported Hardware:  ATneko44 @ 8MHZ
 
 ***************************************/
